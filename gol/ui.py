@@ -15,16 +15,10 @@ class Pygame:
         return (int(self.screen.get_width() / self.cell_size),
                 int(self.screen.get_height() / self.cell_size))
 
-    def show(self, matrix) -> None:
+    def show(self, grid) -> None:
         self.clear()
-
-        width, height = self.size()
-        # TODO: use pyfunctional
-        for y in range(height):
-            for x in range(width):
-                if matrix[y][x]:
-                    self.rect(x, y)
-
+        for x, y in grid:
+            self.rect(x, y)
         pygame.display.flip()
 
     def rect(self, x: int, y: int) -> None:

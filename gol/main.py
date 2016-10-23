@@ -1,12 +1,7 @@
-from copy import deepcopy
-from typing import List, Tuple
 import time
 
 from . import ui
 import gol
-
-
-Matrix = List[List[int]]
 
 
 def make_beacon():
@@ -22,28 +17,16 @@ def make_pentomino():
     return gol.make_grid((20, 20), (21, 20), (20, 21), (19, 21), (20, 22))
 
 
-def make_matrix(width: int, height: int) -> Matrix:
-    return [[0 for _ in range(width)] for _ in range(height)]
-
-
 def main():
     gui = ui.Pygame()
 
     grid = gol.crop_grid(make_pentomino(), *gui.size())
-    matrix = make_matrix(*gui.size())
-    for x, y in grid:
-        matrix[y][x] = 1
-
-    gui.show(matrix)
+    gui.show(grid)
 
     while True:
         time.sleep(0.75)
         grid = gol.crop_grid(gol.next_generation(grid), *gui.size())
-        matrix = make_matrix(*gui.size())
-        for x, y in grid:
-            matrix[y][x] = 1
-
-        gui.show(matrix)
+        gui.show(grid)
 
 
 if __name__ == '__main__':
