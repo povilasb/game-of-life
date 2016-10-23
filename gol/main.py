@@ -26,27 +26,24 @@ def make_matrix(width: int, height: int) -> Matrix:
     return [[0 for _ in range(width)] for _ in range(height)]
 
 
-def matrix_to_str(matrix: Matrix) -> str:
-    lines = [' '.join(['o' if cell else ' ' for cell in row]) \
-             for row in matrix]
-    return '\n'.join(lines)
-
-
-
 def main():
-    grid = gol.crop_grid(make_tetramino(), *ui.size())
-    matrix = make_matrix(*ui.size())
+    gui = ui.Pygame()
+
+    grid = gol.crop_grid(make_pentomino(), *gui.size())
+    matrix = make_matrix(*gui.size())
     for x, y in grid:
         matrix[y][x] = 1
-    ui.show(matrix_to_str(matrix))
+
+    gui.show(matrix)
 
     while True:
         time.sleep(0.75)
-        grid = gol.crop_grid(gol.next_generation(grid), *ui.size())
-        matrix = make_matrix(*ui.size())
+        grid = gol.crop_grid(gol.next_generation(grid), *gui.size())
+        matrix = make_matrix(*gui.size())
         for x, y in grid:
             matrix[y][x] = 1
-        ui.show(matrix_to_str(matrix))
+
+        gui.show(matrix)
 
 
 if __name__ == '__main__':
