@@ -1,4 +1,4 @@
-src_dir := game_of_life
+src_dir := gol
 
 virtualenv_dir := pyenv
 pip := $(virtualenv_dir)/bin/pip
