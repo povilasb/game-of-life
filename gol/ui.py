@@ -17,7 +17,7 @@ class Pygame:
 
     def show(self, grid) -> None:
         self.clear()
-        for x, y in grid:
+        for x, y in grid._cells:
             self.rect(x, y)
         pygame.display.flip()
 

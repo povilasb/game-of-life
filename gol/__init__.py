@@ -1,36 +1,39 @@
 from functools import reduce
-from typing import Set, Tuple, Iterable
+from typing import Tuple, Iterable
 
 
 Cell = Tuple[int, int]
-Grid = Set[Cell]
 
 
-def make_grid(*cells) -> Grid:
-    return set(cells)
+class Grid:
+    def __init__(self, *cells):
+        self._cells = set(cells)
 
+    def next_generation(self):
+        return Grid(
+            *set(filter(lambda cell: self.live_neighbours(cell) in [2, 3],
+                 self._cells)).union(self.newborns())
+        )
 
-def crop_grid(grid: Grid, width: int, height: int) -> Grid:
-    return set(filter(lambda cell: cell[0] in range(0, width) and
-                                   cell[1] in range(0, height),
-                      grid))
+    def crop(self, width: int, height: int):
+        return Grid(
+            *set(filter(lambda cell: cell[0] in range(0, width) and
+                               cell[1] in range(0, height),
+                        self._cells))
+        )
 
+    def live_neighbours(self, cell: Cell) -> int:
+        return len(self._cells.intersection(neighbours(cell)))
 
-def next_generation(grid: Grid) -> Grid:
-    return set(
-        filter(lambda cell: live_neighbours(grid, cell) in [2, 3], grid)
-    ).union(newborns(grid))
+    def newborns(self) -> Iterable[Cell]:
+        return filter(
+            lambda c: c not in self._cells and self.live_neighbours(c) == 3,
+            reduce(lambda cells, c: set(cells).union(neighbours(c)),
+                   self._cells, set())
+        )
 
-
-def newborns(grid: Grid) -> Iterable[Cell]:
-    return filter(
-        lambda c: c not in grid and live_neighbours(grid, c) == 3,
-        reduce(lambda cells, c: set(cells).union(neighbours(c)), grid, set())
-    )
-
-
-def live_neighbours(grid: Grid, cell: Cell) -> int:
-    return len(grid.intersection(neighbours(cell)))
+    def __eq__(self, other) -> bool:
+        return self._cells == other._cells
 
 
 def neighbours(cell: Cell) -> Iterable[Cell]:
