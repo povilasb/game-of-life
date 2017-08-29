@@ -1,5 +1,7 @@
 import time
 
+import click
+
 from . import ui
 from gol import Grid
 
@@ -17,8 +19,11 @@ def make_pentomino():
     return Grid((20, 20), (21, 20), (20, 21), (19, 21), (20, 22))
 
 
-def main():
-    gui = ui.Pygame()
+@click.command()
+@click.option('--fullscreen', '-f', 'fullscreen', default=False, type=bool,
+              help='Run in fullscreen.', is_flag=True)
+def main(fullscreen: bool) -> None:
+    gui = ui.Pygame(fullscreen=fullscreen)
 
     grid = make_pentomino().crop(*gui.size())
     gui.show(grid)
