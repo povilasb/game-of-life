@@ -1,4 +1,5 @@
 from typing import Tuple
+from threading import Thread
 
 import pygame
 
@@ -6,11 +7,18 @@ import pygame
 class Pygame:
     def __init__(self, fullscreen: bool=False) -> None:
         self.cell_size = 20
+        self.keep_running = True
 
         pygame.init()
 
         flags = pygame.FULLSCREEN if fullscreen else 0
         self.screen = pygame.display.set_mode((0, 0), flags)
+
+        self._input_thread = Thread(target=self._on_input)
+
+    def __del__(self) -> None:
+        pygame.quit()
+        self._input_thread.join()
 
     def size(self) -> Tuple[int, int]:
         return (int(self.screen.get_width() / self.cell_size),
@@ -32,3 +40,14 @@ class Pygame:
 
     def clear(self) -> None:
         self.screen.fill((0, 0, 0))
+
+    def handle_input(self) -> None:
+        """Starts new thread that listens for keyboard input."""
+        self._input_thread.start()
+
+    def _on_input(self) -> None:
+        while self.keep_running:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == 27:
+                        self.keep_running = False

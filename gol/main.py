@@ -24,11 +24,12 @@ def make_pentomino():
               help='Run in fullscreen.', is_flag=True)
 def main(fullscreen: bool) -> None:
     gui = ui.Pygame(fullscreen=fullscreen)
+    gui.handle_input()
 
     grid = make_pentomino().crop(*gui.size())
     gui.show(grid)
 
-    while True:
+    while gui.keep_running:
         time.sleep(0.75)
         grid = grid.next_generation().crop(*gui.size())
         gui.show(grid)
