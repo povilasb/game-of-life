@@ -4,11 +4,13 @@ import pygame
 
 
 class Pygame:
-    def __init__(self) -> None:
+    def __init__(self, fullscreen: bool=False) -> None:
         self.cell_size = 20
 
         pygame.init()
-        self.screen = pygame.display.set_mode()  # pygame.FULLSCREEN)
+
+        flags = pygame.FULLSCREEN if fullscreen else 0
+        self.screen = pygame.display.set_mode((0, 0), flags)
 
     def size(self) -> Tuple[int, int]:
         return (int(self.screen.get_width() / self.cell_size),
