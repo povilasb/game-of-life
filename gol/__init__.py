@@ -18,7 +18,7 @@ class Grid:
     def crop(self, width: int, height: int):
         return Grid(
             *set(filter(lambda cell: cell[0] in range(0, width) and
-                               cell[1] in range(0, height),
+                        cell[1] in range(0, height),
                         self._cells))
         )
 

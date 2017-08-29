@@ -6,7 +6,7 @@ from gol import Grid
 
 def make_beacon():
     return Grid((4, 4), (4, 5), (5, 5), (5, 4),
-                 (6, 6), (6, 7), (7, 7), (7, 6))
+                (6, 6), (6, 7), (7, 7), (7, 6))
 
 
 def make_tetramino():
