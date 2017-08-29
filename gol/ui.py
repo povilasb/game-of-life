@@ -1,7 +1,6 @@
 from typing import Tuple
 
 import pygame
-from pygame.locals import *
 
 
 class Pygame:
