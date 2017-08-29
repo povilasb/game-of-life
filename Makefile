@@ -13,5 +13,5 @@ test: $(virtualenv_dir)
 .PHONY: test
 
 $(virtualenv_dir): requirements.txt
-	virtualenv --python=python3 $@
+	python3 -m venv $(virtualenv_dir)
 	$(pip) install -r $^
