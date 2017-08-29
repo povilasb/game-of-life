@@ -5,5 +5,8 @@ python:
   - "3.6-dev"
 
 script:
-  - make lint
-  - make test
+  - pip install -r requirements/prod.txt
+  - pip install -r requirements/dev.txt
+  - flake8 gol
+  - PYTHONPATH=$PYTHONPATH:. pytest --cov=gol tests
+  - coverage report -m
