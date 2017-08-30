@@ -11,6 +11,7 @@ class Pygame:
         self.keep_running = True
 
         pygame.init()
+        pygame.mixer.quit()
 
         flags = pygame.FULLSCREEN if fullscreen else 0
         self.screen = pygame.display.set_mode((0, 0), flags)
