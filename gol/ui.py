@@ -1,5 +1,6 @@
 from typing import Tuple
 from threading import Thread
+import time
 
 import pygame
 
@@ -51,3 +52,4 @@ class Pygame:
                 if event.type == pygame.KEYDOWN:
                     if event.key == 27:
                         self.keep_running = False
+            time.sleep(0.25)
